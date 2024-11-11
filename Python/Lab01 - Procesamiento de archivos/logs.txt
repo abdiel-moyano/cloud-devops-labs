@@ -1,0 +1,6 @@
+INFO - Application started
+ERROR - Connection failed to database
+WARNING - Disk space low
+DEBUG - User login attempt
+ERROR - Timeout reached on request
+INFO - Application shutdown
