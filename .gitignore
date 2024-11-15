@@ -1,1 +1,11 @@
-Terraform/01 - VPC-subnet-EC2/.terraform/providers/registry.terraform.io/hashicorp/aws/3.74.3/darwin_arm64/terraform-provider-aws_v3.74.3_x5
+# Ignorar directorios y archivos generados por Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+.terraformrc
+terraform.rc
