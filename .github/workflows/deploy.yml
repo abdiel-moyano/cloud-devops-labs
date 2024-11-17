@@ -1,0 +1,31 @@
+name: Deploy to Azure Storage
+
+on:
+  push:
+    branches:
+      - main  # Despliega cuando se realiza un push en la rama main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Chequear el código
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Paso 2: Configurar Azure CLI
+      - name: Set up Azure CLI
+        uses: azure/cli@v1
+
+      # Paso 3: Autenticar en Azure
+      - name: Login to Azure
+        run: echo "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}" | az storage blob upload-batch --source . --destination '$web' --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+        
+      # Paso 4: Desplegar la aplicación al contenedor $web
+      - name: Deploy to Azure Storage
+        run: az storage blob upload-batch --source ./ --destination '$web' --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
+
+      # Paso 5: Limpiar los archivos antiguos que ya no existen en el repositorio
+      - name: Clean up old files
+        run: az storage blob delete-batch --source '$web' --connection-string "${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
